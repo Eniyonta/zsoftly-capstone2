@@ -8,8 +8,39 @@ GitHub Actions–based CI/CD pipeline integrating:
 - Dockerized web application (NGINX)
 - Amazon Elastic Container Registry (ECR)
 - GitHub Actions (CI/CD)
-- AWS IAM (OIDC authentication)
 - Multi-environment deployment strategy (Dev, Staging, Prod)
+
+### Architecture Diagram
+
+![CI/CD Architecture](screenshots/A_flowchart_digital_illustration_in_the_image_illu.png)
+
+### Summary of the Pipeline
+
+This diagram shows the **full lifecycle of the project**:
+
+1. **Developers push code to GitHub branches**  
+   - Code is managed in `dev`, `staging`, and `main` branches.  
+   - Pull requests or direct pushes trigger the corresponding workflow.
+
+2. **GitHub Actions automatically builds Docker images per environment**  
+   - Each environment has its own workflow (`Dev`, `Staging`, `Prod`).  
+   - Steps: Checkout → Build Docker image → Tag → Push to ECR.
+
+3. **Docker images are pushed to AWS ECR repository with environment tags**  
+   - Repository: `zsoftly-capstone-repo`  
+   - Tags: `:dev`, `:staging`, `:prod` to separate environments.
+
+4. **Images are deployed to their respective environment**  
+   - Dev environment uses `:dev` image  
+   - Staging uses `:staging` image  
+   - Production uses `:prod` image
+
+5. **Promotion from Dev → Staging → Prod ensures safe deployment**  
+   - Dev image is tested first, then promoted to Staging  
+   - Finally, tested and deployed to Production  
+   - Ensures stability and reduces risk of production errors
+
+---
 
 ## CI/CD Workflow
 
