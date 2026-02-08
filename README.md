@@ -53,7 +53,7 @@ The pipeline is triggered by pull requests targeting specific branches:
 Each pipeline execution:
 1. Builds the Docker image
 2. Tags the image based on the target environment
-3. Authenticates securely with AWS using OIDC
+3. Authenticates securely with AWS credentials
 4. Pushes the image to Amazon ECR
 
 ## Deployment
