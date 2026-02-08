@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Typing Animation Demo</title>
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%,100% {opacity:0.4;}
+    50% {opacity:1;}
+}
+
+.content {
+    max-width: 700px;
+    text-align: center;
+}
+
+.line {
+    margin: 10px 0;
+    min-height: 1.2em;
+    display: block;
+}
+
+.cursor::after {
+    content: "|";
+    animation: blink 0.6s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.rocket {
+    position: absolute;
+    font-size: 2em;
+    animation: rocketMove 5s linear infinite;
+}
+
+@keyframes rocketMove {
+    0% { transform: translate(-100px, 100vh) rotate(-45deg); }
+    50% { transform: translate(50vw, 50vh) rotate(0deg); }
+    100% { transform: translate(110vw, -100px) rotate(45deg); }
+}
+</style>
+</head>
+<body>
+
+<script>
+for(let i=0;i<100;i++){
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = Math.random()*100+'vh';
+    star.style.left = Math.random()*100+'vw';
+    star.style.animationDuration = (Math.random()*2+1)+'s';
+    document.body.appendChild(star);
+}
+</script>
+
+<div class="rocket">🚀</div>
+
+<div class="content">
+    <div id="line1" class="line"></div>
+    <div id="line2" class="line"></div>
+</div>
+
+<script>
+// Array of lines to type
+const lines = [
+    {id:"line1", text:"I am Sylvia", speed:120},
+    {id:"line2", text:"This is my ZSOFTLY Capstone Project 2 on Automating Docker Image Deployment to Amazon ECR", speed:20}
+];
+
+let currentLine = 0;
+
+// Type each line character by character, using span
+function typeLine() {
+    if(currentLine >= lines.length) return;
+
+    const el = document.getElementById(lines[currentLine].id);
+    const { text, speed } = lines[currentLine];
+
+    el.classList.add("cursor");
+    let i = 0;
+
+    function typeChar() {
+        if(i < text.length){
+            const span = document.createElement("span");
+            span.textContent = text[i];
+            el.appendChild(span);
+            i++;
+            setTimeout(typeChar, speed);
+        } else {
+            el.classList.remove("cursor");
+            currentLine++;
+            setTimeout(typeLine, 500);
+        }
+    }
+    typeChar();
+}
+
+typeLine();
+</script>
+
+</body>
+</html>
+
