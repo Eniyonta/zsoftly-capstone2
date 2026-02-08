@@ -12,7 +12,7 @@ GitHub Actions–based CI/CD pipeline integrating:
 
 ### Architecture Diagram
 
-![CI/CD Architecture](screenshots/A_flowchart_digital_illustration_in_the_image_illu.png)
+![CI/CD Architecture](screenshots/screenshots/architecture-diagram.png)
 
 ### Summary of the Pipeline
 
